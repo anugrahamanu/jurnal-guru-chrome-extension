@@ -1,6 +1,7 @@
 // Side Panel script untuk Chrome Extension Jurnal Guru Digital
 
 const DEFAULT_SERVER_URL = "http://localhost/Jurnal Guru";
+const ONLINE_SERVER_URL = "https://gurugenz.my.id";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const iframe = document.getElementById("mainFrame");
@@ -11,14 +12,25 @@ document.addEventListener("DOMContentLoaded", async () => {
   const settingsPanel = document.getElementById("settingsPanel");
   const inputUrl = document.getElementById("sidepanelServerUrl");
   const btnSaveUrl = document.getElementById("btnSaveSidepanelUrl");
+  const btnPresetOnlineSide = document.getElementById("btnPresetOnlineSide");
+  const btnPresetLocalSide = document.getElementById("btnPresetLocalSide");
   const tabButtons = document.querySelectorAll(".tab-btn");
 
   let currentServerUrl = DEFAULT_SERVER_URL;
   let currentPath = "app.html";
 
-  // Normalisasi URL
+  // Normalisasi URL: pastikan selalu memiliki protokol https:// atau http://
   function normalizeUrl(url) {
-    return (url || "").trim().replace(/\/+$/, "");
+    let clean = (url || "").trim().replace(/\/+$/, "");
+    if (!clean) return clean;
+    if (!/^https?:\/\//i.test(clean)) {
+      if (clean.toLowerCase().startsWith("localhost") || clean.startsWith("127.0.0.1")) {
+        clean = "http://" + clean;
+      } else {
+        clean = "https://" + clean;
+      }
+    }
+    return clean;
   }
 
   // Muat URL yang tersimpan
@@ -35,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     inputUrl.value = currentServerUrl;
   }
 
-  // Dapatkan Full URL saat ini
+  // Dapatkan Full URL yang valid
   function getTargetUrl(path) {
     const base = normalizeUrl(currentServerUrl);
     return `${base}/${path}`;
@@ -52,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     iframe.src = target;
 
-    // Timeout proteksi jika loading lambat / offline
+    // Timeout pengaman loader
     setTimeout(() => {
       if (loader) loader.classList.add("hidden");
     }, 4000);
@@ -83,8 +95,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       try {
         iframe.contentWindow.location.reload();
       } catch (e) {
-        // Fallback jika beda origin
-        iframe.src = iframe.src;
+        iframe.src = getTargetUrl(currentPath);
       }
     });
   }
@@ -104,14 +115,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // Preset Online
+  if (btnPresetOnlineSide && inputUrl) {
+    btnPresetOnlineSide.addEventListener("click", () => {
+      inputUrl.value = ONLINE_SERVER_URL;
+    });
+  }
+
+  // Preset Localhost
+  if (btnPresetLocalSide && inputUrl) {
+    btnPresetLocalSide.addEventListener("click", () => {
+      inputUrl.value = DEFAULT_SERVER_URL;
+    });
+  }
+
   // Tombol Simpan URL Server
   if (btnSaveUrl && inputUrl) {
     btnSaveUrl.addEventListener("click", async () => {
       let newUrl = normalizeUrl(inputUrl.value);
       if (!newUrl) {
         newUrl = DEFAULT_SERVER_URL;
-        inputUrl.value = newUrl;
       }
+      inputUrl.value = newUrl;
 
       await chrome.storage.local.set({ serverUrl: newUrl });
       currentServerUrl = newUrl;

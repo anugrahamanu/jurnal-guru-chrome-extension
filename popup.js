@@ -1,6 +1,7 @@
 // Popup script untuk Chrome Extension Jurnal Guru Digital
 
 const DEFAULT_SERVER_URL = "http://localhost/Jurnal Guru";
+const ONLINE_SERVER_URL = "https://gurugenz.my.id";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const statusBadge = document.getElementById("serverStatusBadge");
@@ -10,16 +11,31 @@ document.addEventListener("DOMContentLoaded", async () => {
   const settingsChevron = document.getElementById("settingsChevron");
   const settingsBody = document.getElementById("settingsBody");
   const inputServerUrl = document.getElementById("inputServerUrl");
+  const btnSetOnline = document.getElementById("btnSetOnline");
   const btnSetLocalhost = document.getElementById("btnSetLocalhost");
   const btnSaveUrl = document.getElementById("btnSaveUrl");
   const shortcutCards = document.querySelectorAll(".shortcut-card");
+
+  // Fungsi normalize URL: otomatis menambahkan https:// atau http:// jika belum ada
+  function normalizeUrl(url) {
+    let clean = (url || "").trim().replace(/\/+$/, "");
+    if (!clean) return clean;
+    if (!/^https?:\/\//i.test(clean)) {
+      if (clean.toLowerCase().startsWith("localhost") || clean.startsWith("127.0.0.1")) {
+        clean = "http://" + clean;
+      } else {
+        clean = "https://" + clean;
+      }
+    }
+    return clean;
+  }
 
   // Ambil serverUrl yang tersimpan
   let currentServerUrl = DEFAULT_SERVER_URL;
   try {
     const data = await chrome.storage.local.get("serverUrl");
     if (data && data.serverUrl) {
-      currentServerUrl = data.serverUrl;
+      currentServerUrl = normalizeUrl(data.serverUrl);
     }
   } catch (err) {
     console.warn("Gagal membaca storage:", err);
@@ -27,11 +43,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (inputServerUrl) {
     inputServerUrl.value = currentServerUrl;
-  }
-
-  // Fungsi normalize URL (hapus trailing slash)
-  function normalizeUrl(url) {
-    return (url || "").trim().replace(/\/+$/, "");
   }
 
   // Cek status server
@@ -43,11 +54,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     statusText.textContent = "Memeriksa...";
 
     try {
-      // Coba fetch ringan dengan no-cors atau HEAD
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2500);
+      const timeoutId = setTimeout(() => controller.abort(), 3500);
 
-      const res = await fetch(`${base}/app.html`, {
+      await fetch(`${base}/app.html`, {
         method: "HEAD",
         mode: "no-cors",
         signal: controller.signal
@@ -58,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       statusText.textContent = "Tersambung";
     } catch (e) {
       statusBadge.className = "status-pill offline";
-      statusText.textContent = "Offline / Cek XAMPP";
+      statusText.textContent = "Offline / Cek Server";
     }
   }
 
@@ -68,8 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Buka Side Panel
   if (btnOpenSidePanel) {
     btnOpenSidePanel.addEventListener("click", () => {
-      chrome.runtime.sendMessage({ action: "open_side_panel" }, (response) => {
-        // Tutup popup agar side panel terlihat jelas
+      chrome.runtime.sendMessage({ action: "open_side_panel" }, () => {
         setTimeout(() => window.close(), 150);
       });
     });
@@ -98,6 +107,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  // Tombol Cepat Set Online (gurugenz.my.id)
+  if (btnSetOnline && inputServerUrl) {
+    btnSetOnline.addEventListener("click", () => {
+      inputServerUrl.value = ONLINE_SERVER_URL;
+    });
+  }
+
   // Tombol Cepat Set Localhost
   if (btnSetLocalhost && inputServerUrl) {
     btnSetLocalhost.addEventListener("click", () => {
@@ -111,8 +127,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       let newUrl = normalizeUrl(inputServerUrl.value);
       if (!newUrl) {
         newUrl = DEFAULT_SERVER_URL;
-        inputServerUrl.value = newUrl;
       }
+      inputServerUrl.value = newUrl;
 
       await chrome.storage.local.set({ serverUrl: newUrl });
       currentServerUrl = newUrl;

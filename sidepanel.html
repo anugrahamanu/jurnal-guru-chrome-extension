@@ -302,8 +302,16 @@
     <div class="settings-panel" id="settingsPanel">
       <label style="font-weight: 600; color: #475569;">Alamat Server Aplikasi:</label>
       <div class="settings-input-group">
-        <input type="text" id="sidepanelServerUrl" class="settings-input" placeholder="http://localhost/Jurnal Guru">
+        <input type="text" id="sidepanelServerUrl" class="settings-input" placeholder="https://gurugenz.my.id">
         <button id="btnSaveSidepanelUrl" class="settings-save-btn">Simpan</button>
+      </div>
+      <div style="display: flex; gap: 4px; margin-top: 6px;">
+        <button type="button" id="btnPresetOnlineSide" style="flex:1; font-size: 10px; padding: 3px 6px; border: 1px solid #bfdbfe; border-radius: 4px; background: #eff6ff; color: #1d4ed8; font-weight: 600; cursor: pointer;">
+          gurugenz.my.id
+        </button>
+        <button type="button" id="btnPresetLocalSide" style="flex:1; font-size: 10px; padding: 3px 6px; border: 1px solid var(--border); border-radius: 4px; background: white; color: #64748b; cursor: pointer;">
+          Localhost
+        </button>
       </div>
     </div>
   </header>
