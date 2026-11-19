@@ -1,72 +1,66 @@
 ========================================================================
-   PANDUAN PEMASANGAN EKSTENSI GOOGLE CHROME - JURNAL GURU DIGITAL & LMS
+   PANDUAN PEMASANGAN EKSTENSI GOOGLE CHROME - JURNAL GURU DIGITAL
 ========================================================================
 
-Ekstensi ini memungkinkan Bapak/Ibu Guru dan Admin membuka Jurnal Guru Digital
-langsung dari toolbar browser Google Chrome atau melalui bilah samping (Side Panel)
-secara berdampingan saat browsing materi/internet.
+Ekstensi ini dibuat khusus untuk mempermudah Bapak/Ibu Guru membuka 
+Jurnal Guru Digital & LMS langsung di samping layar laptop (Side Panel) 
+secara berdampingan saat browsing materi ajar, referensi, atau YouTube.
+
+Ekstensi ini 100% AMAN dan sudah OTOMATIS TERHUBUNG ke:
+https://gurugenz.my.id (Tidak perlu setting apapun lagi!)
 
 ------------------------------------------------------------------------
-LANGKAH-LANGKAH PEMASANGAN (HANYA BUTUH 1 MENIT):
+HANYA BUTUH 4 LANGKAH MUDAH (KURANG DARI 1 MENIT):
 ------------------------------------------------------------------------
 
-1. Buka browser Google Chrome di Laptop / Komputer.
+LANGKAH 1: EKSTRAK FILE ZIP
+1. Download file "chrome-extension.zip" yang Anda terima.
+2. Klik kanan file "chrome-extension.zip" tersebut, lalu pilih:
+   "Extract All..." (Ekstrak Semua).
+3. Anda akan mendapatkan sebuah folder bernama "chrome-extension".
 
-2. Buka menu Ekstensi:
-   - Ketik pada kolom alamat: chrome://extensions lalu tekan Enter
-   - ATAU: Klik ikon titik tiga (⋮) di pojok kanan atas Chrome -> 
-     Pilih "Ekstensi" (Extensions) -> "Kelola Ekstensi" (Manage Extensions).
+LANGKAH 2: BUKA MENU EKSTENSI DI GOOGLE CHROME
+1. Buka browser Google Chrome di Laptop / Komputer Anda.
+2. Pada kolom alamat web (di bagian atas tempat mengetik link), ketik:
+   chrome://extensions
+   lalu tekan ENTER pada keyboard Anda.
 
-3. Aktifkan "Mode Pengembang" (Developer Mode):
-   - Lihat di pojok kanan atas halaman ekstensi, ada sakelar bertuliskan
-     "Mode Pengembang" / "Developer mode".
-   - Geser tombol tersebut hingga posisi AKTIF (ON / berwarna biru).
+LANGKAH 3: NYALAKAN "MODE PENGEMBANG"
+1. Lihat di pojok kanan atas layar Chrome Anda.
+2. Ada tombol sakelar bertuliskan "Mode Pengembang" (Developer mode).
+3. Klik sakelar tersebut hingga posisinya AKTIF (berwarna biru).
 
-4. Pasang Ekstensi:
-   - Setelah Mode Pengembang aktif, akan muncul 3 tombol di pojok kiri atas:
-     [Muat yang belum dibongkar / Load unpacked]
-   - Klik tombol "Muat yang belum dibongkar" (Load unpacked).
-   - Di jendela pemilih folder yang muncul, arahkan dan pilih folder:
-     c:\Xampp V7.33\htdocs\Jurnal Guru\chrome-extension
-   - Klik "Select Folder" / "Pilih Folder".
+LANGKAH 4: PASANG FOLDER EKSTENSI
+1. Setelah Mode Pengembang aktif, lihat di pojok kiri atas halaman.
+2. Klik tombol: "Muat yang belum dibongkar" (Load unpacked).
+3. Jendela komputer akan terbuka, cari dan pilih folder "chrome-extension"
+   hasil ekstrak tadi.
+4. Klik tombol "Select Folder" (Pilih Folder).
 
-5. SELESAI!
-   Ekstensi "Jurnal Guru Digital & LMS" kini sudah berhasil terpasang di Chrome.
+SELESAI! 🎉
+Ekstensi "Jurnal Guru Digital & LMS" kini sudah berhasil terpasang di Chrome Anda!
 
 ------------------------------------------------------------------------
-CARA PENGGUNAAN & PINTASAN:
+TIPS PENGGUNAAN AGAR SANGAT PRAKTIS:
 ------------------------------------------------------------------------
 
-1. SEMATKAN (PIN) IKON KE TOOLBAR:
-   - Klik ikon "Puzzle" (Ekstensi) di pojok kanan atas Chrome.
-   - Cari "Jurnal Guru Digital & LMS", lalu klik ikon Jarum Pentul (Pin)
-     agar ikon topi toga wisuda selalu muncul di toolbar atas.
+1. PIN (SEMATKAN) IKON DI TOOLBAR ATAS:
+   - Klik ikon "Puzzle" (potongan puzzle) di pojok kanan atas Chrome.
+   - Cari "Jurnal Guru Digital & LMS", lalu klik ikon Jarum Pentul (Pin).
+   - Sekarang ikon topi toga wisuda akan selalu muncul di atas browser Anda.
 
-2. AKSES CEPAT (POPUP):
-   - Klik ikon Jurnal Guru di toolbar untuk melihat:
-     * Status koneksi server (Localhost / Online).
-     * Tombol besar "Buka di Side Panel".
-     * 6 Tombol Pintasan Cepat (Dashboard Guru, LMS Guru, CBT Soal, Portal Siswa, Administrasi, Layar Jadwal).
-
-3. FITUR SIDE PANEL (BILAH SAMPING):
-   - Tekan tombol keyboard: Alt + J
-   - ATAU: Klik tombol "Buka di Side Panel" di popup ekstensi.
+2. BUKA DI BILAH SAMPING (SIDE PANEL):
+   - Cukup tekan tombol keyboard: Alt + J
+   - ATAU: Klik ikon Jurnal Guru di toolbar -> klik "Buka di Side Panel".
    - Jurnal Guru akan langsung terbuka di bilah samping kanan browser.
-     Bapak/Ibu bisa mengetik jurnal atau absensi sambil browsing materi di tab utama!
+     Bapak/Ibu bisa mengetik jurnal sambil membaca materi di tab utama!
 
-4. KLIK KANAN (CONTEXT MENU):
-   - Klik kanan di mana saja pada halaman web apa pun, pilih:
-     "📖 Buka Jurnal Guru di Side Panel (Alt+J)" untuk akses instan.
+3. PINTASAN LMS GURU CEPAT:
+   - Di bagian atas bilah samping, cukup klik tombol "LMS Guru" untuk 
+     langsung masuk ke tugas dan modul kelas tanpa muat ulang.
 
-5. PENGATURAN ALAMAT SERVER:
-   - Secara default terhubung ke: http://localhost/Jurnal Guru
-   - Jika aplikasi sekolah di-hosting di internet (misal: https://jurnal.sekolah.sch.id),
-     cukup klik "Pengaturan Alamat Server" di popup atau side panel, masukkan alamat URL,
-     lalu klik "Simpan". Semua fitur otomatis tersambung ke web sekolah Anda!
+4. BUKA LAYAR PENUH (TAB BARU):
+   - Kapan saja ingin melihat tampilan penuh, cukup klik ikon panah kotak [ ↗ ]
+     di pojok kanan atas bilah samping.
 
-------------------------------------------------------------------------
-CATATAN TEKNIS:
-------------------------------------------------------------------------
-- Ekstensi ini 100% aman dan menggunakan standar Google Manifest V3 terbaru.
-- Ekstensi berjalan di sisi browser (client-side), tidak mengubah file apa pun di server XAMPP.
-- Pastikan XAMPP (Apache & MySQL) dalam keadaan AKTIF (Start) jika menggunakan localhost.
+Selamat menggunakan Jurnal Guru Digital! 🎓

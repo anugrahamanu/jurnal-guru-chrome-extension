@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panduan Pemasangan Ekstensi - Jurnal Guru Digital</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 30px 16px;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .logo-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      font-size: 26px;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Card Box */
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #eff6ff;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #bfdbfe;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: #475569;
+      margin-left: 44px;
+    }
+
+    .code-box {
+      display: inline-block;
+      background: #f1f5f9;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: Consolas, monospace;
+      font-size: 13px;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+      margin: 4px 0;
+      font-weight: 600;
+    }
+
+    .highlight-box {
+      margin-top: 10px;
+      margin-left: 44px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      font-size: 12px;
+      color: #166534;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .feat-item {
+      padding: 12px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .feat-icon {
+      font-size: 18px;
+      color: var(--primary);
+      width: 28px;
+      text-align: center;
+    }
+
+    .feat-text h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .feat-text p {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Keyboard Badge */
+    .kbd {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 14px;
+      color: #334155;
+      background-color: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-badge">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <h1>Panduan Pemasangan Ekstensi Chrome</h1>
+      <p class="subtitle">Jurnal Guru Digital & LMS (Khusus Guru & Tenaga Pendidik)</p>
+    </header>
+
+    <!-- Card 1: Langkah Pemasangan -->
+    <div class="card">
+      <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 18px; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-circle-play" style="color: var(--primary);"></i> 4 Langkah Mudah Pasang Ekstensi (1 Menit)
+      </h2>
+
+      <!-- Step 1 -->
+      <div style="margin-bottom: 20px;">
+        <div class="step-header">
+          <div class="step-num">1</div>
+          <div class="step-title">Ekstrak File ZIP</div>
+        </div>
+        <p class="step-desc">
+          Pastikan Anda sudah mendownload file <span class="code-box">chrome-extension.zip</span>. Klik kanan file tersebut, lalu pilih <strong>Extract All (Ekstrak Semua)</strong> hingga menjadi folder biasa.
+        </p>
+      </div>
+
+      <!-- Step 2 -->
+      <div style="margin-bottom: 20px;">
+        <div class="step-header">
+          <div class="step-num">2</div>
+          <div class="step-title">Buka Menu Ekstensi Chrome</div>
+        </div>
+        <p class="step-desc">
+          Buka browser Google Chrome di laptop Anda, lalu ketik pada kolom alamat web:
+          <br>
+          <span class="code-box">chrome://extensions</span> lalu tekan <strong>Enter</strong>.
+        </p>
+      </div>
+
+      <!-- Step 3 -->
+      <div style="margin-bottom: 20px;">
+        <div class="step-header">
+          <div class="step-num">3</div>
+          <div class="step-title">Nyalakan Mode Pengembang</div>
+        </div>
+        <p class="step-desc">
+          Lihat di pojok kanan atas layar Chrome, aktifkan sakelar <strong>"Mode Pengembang" / "Developer mode"</strong> hingga berwarna biru.
+        </p>
+      </div>
+
+      <!-- Step 4 -->
+      <div>
+        <div class="step-header">
+          <div class="step-num">4</div>
+          <div class="step-title">Muat Folder Ekstensi</div>
+        </div>
+        <p class="step-desc">
+          Klik tombol <strong>"Muat yang belum dibongkar" (Load unpacked)</strong> di pojok kiri atas, lalu arahkan dan pilih folder hasil ekstrak tadi (folder <span class="code-box">chrome-extension</span>). Klik <strong>Select Folder</strong>.
+        </p>
+        <div class="highlight-box">
+          <i class="fa-solid fa-circle-check" style="font-size: 16px; margin-top: 2px;"></i>
+          <div>
+            <strong>SELESAI!</strong> Ekstensi Jurnal Guru langsung aktif di browser Anda dan sudah otomatis tersambung ke <strong>https://gurugenz.my.id</strong> tanpa perlu setting apapun lagi!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Cara Menggunakan & Pintasan -->
+    <div class="card">
+      <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 14px; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+        <i class="fa-solid fa-wand-magic-sparkles" style="color: #f59e0b;"></i> Cara Menggunakan Ekstensi
+      </h2>
+
+      <div class="features-grid">
+        <div class="feat-item">
+          <div class="feat-icon"><i class="fa-solid fa-thumbtack"></i></div>
+          <div class="feat-text">
+            <h4>Sematkan Ikon (Pin)</h4>
+            <p>Klik ikon Puzzle di kanan atas Chrome, lalu Pin logo Jurnal Guru agar selalu tampil di toolbar.</p>
+          </div>
+        </div>
+
+        <div class="feat-item">
+          <div class="feat-icon"><i class="fa-solid fa-table-columns"></i></div>
+          <div class="feat-text">
+            <h4>Bilah Samping (<span class="kbd">Alt</span> + <span class="kbd">J</span>)</h4>
+            <p>Tekan tombol <strong>Alt + J</strong> untuk membuka Jurnal Guru di samping tab saat browsing materi.</p>
+          </div>
+        </div>
+
+        <div class="feat-item">
+          <div class="feat-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <div class="feat-text">
+            <h4>Pintasan LMS Cepat</h4>
+            <p>Klik tombol LMS Guru di atas bilah samping untuk langsung masuk ke tugas dan modul kelas.</p>
+          </div>
+        </div>
+
+        <div class="feat-item">
+          <div class="feat-icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+          <div class="feat-text">
+            <h4>Buka Layar Penuh</h4>
+            <p>Klik ikon panah kotak di pojok atas kapan saja untuk membuka halaman di tab penuh baru.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      Jurnal Guru Digital &bull; Platform Manajemen Mengajar Mandiri
+    </footer>
+  </div>
+
+</body>
+</html>
