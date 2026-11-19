@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         clean = "https://" + clean;
       }
     }
-    // Jika ada akhiran /app.html atau /index.html di server URL, hapus agar path tidak double
     clean = clean.replace(/\/(app|index|siswa|kelola-soal|administrasi)\.html.*$/i, "");
     return clean;
   }
@@ -77,10 +76,53 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (iframeFallback) iframeFallback.style.display = "flex";
   }
 
+  // Daftarkan aturan DNR langsung di sesi Side Panel untuk mencabut X-Frame-Options
+  async function setupSidepanelDnr() {
+    if (!chrome.declarativeNetRequest || !chrome.declarativeNetRequest.updateSessionRules) return;
+    try {
+      await chrome.declarativeNetRequest.updateSessionRules({
+        removeRuleIds: [101, 102],
+        addRules: [
+          {
+            id: 101,
+            priority: 99,
+            action: {
+              type: "modifyHeaders",
+              responseHeaders: [
+                { header: "x-frame-options", operation: "remove" },
+                { header: "content-security-policy", operation: "remove" }
+              ]
+            },
+            condition: {
+              requestDomains: ["gurugenz.my.id", "localhost", "127.0.0.1"],
+              resourceTypes: ["sub_frame"]
+            }
+          }
+        ]
+      });
+    } catch (e) {
+      console.warn("Setup DNR session error:", e);
+    }
+  }
+
   // Muat halaman ke iframe
-  function loadPage(path) {
+  async function loadPage(path) {
     currentPath = path;
-    const target = getTargetUrl(path);
+
+    // Pastikan DNR aktif terlebih dahulu sebelum iframe meminta URL
+    await setupSidepanelDnr();
+
+    let target = getTargetUrl(path);
+
+    // Tambahkan cachebuster agar Chrome tidak menggunakan respons error yang tersimpan di cache
+    const hashIdx = target.indexOf('#');
+    let hash = '';
+    if (hashIdx !== -1) {
+      hash = target.substring(hashIdx);
+      target = target.substring(0, hashIdx);
+    }
+    const sep = target.includes('?') ? '&' : '?';
+    const finalUrl = `${target}${sep}_ext=${Date.now()}${hash}`;
 
     hideFallback();
     if (loader) {
@@ -91,17 +133,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (loadTimeoutId) clearTimeout(loadTimeoutId);
 
     try {
-      iframe.src = target;
+      iframe.src = finalUrl;
     } catch (err) {
       console.warn("Gagal set iframe src:", err);
       showFallback();
       return;
     }
 
-    // Timeout pengaman loader
     loadTimeoutId = setTimeout(() => {
       if (loader) loader.classList.add("hidden");
-    }, 3500);
+    }, 4500);
   }
 
   // Saat iframe selesai termuat
@@ -166,7 +207,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Preset Localhost
   if (btnPresetLocalSide && inputUrl) {
     btnPresetLocalSide.addEventListener("click", () => {
-      inputUrl.value = DEFAULT_SERVER_URL;
+      inputUrl.value = "http://localhost/Jurnal Guru";
     });
   }
 
@@ -191,7 +232,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         settingsPanel.classList.remove("show");
       }, 1200);
 
-      // Muat ulang halaman dengan URL server baru
       loadPage(currentPath);
     });
   }
