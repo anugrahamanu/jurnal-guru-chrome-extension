@@ -1,6 +1,6 @@
 // Popup script untuk Chrome Extension Jurnal Guru Digital
 
-const DEFAULT_SERVER_URL = "http://localhost/Jurnal Guru";
+const DEFAULT_SERVER_URL = "https://gurugenz.my.id";
 const ONLINE_SERVER_URL = "https://gurugenz.my.id";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -37,6 +37,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await chrome.storage.local.get("serverUrl");
     if (data && data.serverUrl) {
       currentServerUrl = normalizeUrl(data.serverUrl);
+      if (!/^https?:\/\//i.test(data.serverUrl) || data.serverUrl.includes("gurugenz.my.id")) {
+        currentServerUrl = "https://gurugenz.my.id";
+        await chrome.storage.local.set({ serverUrl: currentServerUrl });
+      }
+    } else {
+      await chrome.storage.local.set({ serverUrl: DEFAULT_SERVER_URL });
     }
   } catch (err) {
     console.warn("Gagal membaca storage:", err);

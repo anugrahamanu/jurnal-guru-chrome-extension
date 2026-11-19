@@ -1,6 +1,6 @@
 // Background Service Worker untuk Ekstensi Chrome Jurnal Guru Digital (Manifest V3)
 
-const DEFAULT_SERVER_URL = "http://localhost/Jurnal Guru";
+const DEFAULT_SERVER_URL = "https://gurugenz.my.id";
 const ONLINE_SERVER_URL = "https://gurugenz.my.id";
 
 // Fungsi normalisasi URL
