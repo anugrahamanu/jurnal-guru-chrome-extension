@@ -159,6 +159,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       btn.classList.add("active");
 
       const path = btn.getAttribute("data-path") || "app.html";
+      const targetMenu = btn.getAttribute("data-menu");
+
+      // Jika iframe saat ini sudah berada di app.html dan ada targetMenu:
+      // Kirim postMessage langsung agar berpindah menu instan tanpa reload halaman!
+      if (targetMenu && currentPath.includes("app.html") && iframe.contentWindow) {
+        currentPath = path;
+        try {
+          iframe.contentWindow.postMessage({ action: "SWITCH_MENU", menu: targetMenu }, "*");
+          return;
+        } catch (e) {}
+      }
+
       loadPage(path);
     });
   });
