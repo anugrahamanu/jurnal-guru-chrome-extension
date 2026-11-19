@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jurnal Guru Digital</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --surface: #ffffff;
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --amber: #f59e0b;
+      --purple: #8b5cf6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      width: 360px;
+      background: var(--bg);
+      color: var(--text);
+      padding: 16px;
+      user-select: none;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+
+    .brand-text h1 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .status-pill.offline {
+      background: #fef2f2;
+      color: #991b1b;
+      border-color: #fecaca;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    .status-pill.offline .status-dot {
+      background: #ef4444;
+    }
+
+    /* Hero Side Panel Button */
+    .hero-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: #ffffff;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin-bottom: 14px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+    }
+
+    .hero-btn:hover {
+      background: linear-gradient(135deg, #0f172a, #020617);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.22);
+    }
+
+    .hero-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-btn-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(37, 99, 235, 0.25);
+      color: #60a5fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .hero-btn-text h2 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: left;
+    }
+
+    .hero-btn-text p {
+      font-size: 10px;
+      color: #94a3b8;
+      text-align: left;
+    }
+
+    .hero-badge {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 3px 7px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    /* Section Title */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Grid Shortcuts */
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .shortcut-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      transition: all 0.18s ease;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .shortcut-card:hover {
+      border-color: #cbd5e1;
+      background: #f1f5f9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .shortcut-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .shortcut-card.blue .shortcut-icon { background: #dbeafe; color: #1d4ed8; }
+    .shortcut-card.purple .shortcut-icon { background: #ede9fe; color: #6d28d9; }
+    .shortcut-card.amber .shortcut-icon { background: #fef3c7; color: #b45309; }
+    .shortcut-card.emerald .shortcut-icon { background: #d1fae5; color: #047857; }
+    .shortcut-card.indigo .shortcut-icon { background: #e0e7ff; color: #3730a3; }
+    .shortcut-card.rose .shortcut-icon { background: #ffe4e6; color: #be123c; }
+
+    .shortcut-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .shortcut-sub {
+      font-size: 9.5px;
+      color: var(--text-muted);
+    }
+
+    /* Settings Collapsible */
+    .settings-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+    }
+
+    .settings-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .settings-header i {
+      transition: transform 0.2s;
+    }
+
+    .settings-body {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+
+    .settings-body.open {
+      display: block;
+    }
+
+    .form-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .input-url {
+      width: 100%;
+      padding: 6px 9px;
+      font-size: 11px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      margin-bottom: 6px;
+    }
+
+    .input-url:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-save-url {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 6px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .btn-save-url:hover {
+      background: var(--primary-hover);
+    }
+
+    /* Footer */
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted);
+      padding-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <div class="brand-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="brand-text">
+        <h1>Jurnal Guru Digital</h1>
+        <p>Aplikasi Administrasi &amp; LMS</p>
+      </div>
+    </div>
+    <div class="status-pill" id="statusPill" title="Status koneksi ke server">
+      <div class="status-dot"></div>
+      <span id="statusText">Memeriksa...</span>
+    </div>
+  </div>
+
+  <!-- Hero Button: Buka di Side Panel -->
+  <button class="hero-btn" id="btnOpenSidePanel" title="Buka di bilah samping browser berdampingan dengan tab aktif">
+    <div class="hero-btn-left">
+      <div class="hero-btn-icon">
+        <i class="fa-solid fa-table-columns"></i>
+      </div>
+      <div class="hero-btn-text">
+        <h2>Buka di Side Panel</h2>
+        <p>Berdampingan dengan tab aktif (Alt+J)</p>
+      </div>
+    </div>
+    <div class="hero-badge">Alt+J</div>
+  </button>
+
+  <!-- Section: Menu Utama -->
+  <div class="section-label">
+    <span>Pintasan Cepat</span>
+    <span style="font-weight: 500; font-size: 10px; text-transform: none;">Tab Baru</span>
+  </div>
+
+  <div class="shortcuts-grid">
+    <!-- Dashboard Guru -->
+    <div class="shortcut-card blue" data-path="app.html">
+      <div class="shortcut-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+      <div>
+        <div class="shortcut-title">Dashboard</div>
+        <div class="shortcut-sub">Jurnal &amp; Absensi</div>
+      </div>
+    </div>
+
+    <!-- LMS Guru -->
+    <div class="shortcut-card purple" data-path="app.html#tugas">
+      <div class="shortcut-icon"><i class="fa-solid fa-layer-group"></i></div>
+      <div>
+        <div class="shortcut-title">LMS Guru</div>
+        <div class="shortcut-sub">Modul &amp; Tugas</div>
+      </div>
+    </div>
+
+    <!-- Kelola Soal CBT -->
+    <div class="shortcut-card amber" data-path="kelola-soal.html">
+      <div class="shortcut-icon"><i class="fa-solid fa-file-circle-question"></i></div>
+      <div>
+        <div class="shortcut-title">Kelola Soal</div>
+        <div class="shortcut-sub">Bank Soal &amp; Nilai</div>
+      </div>
+    </div>
+
+    <!-- Portal Siswa -->
+    <div class="shortcut-card emerald" data-path="siswa.html">
+      <div class="shortcut-icon"><i class="fa-solid fa-user-graduate"></i></div>
+      <div>
+        <div class="shortcut-title">Portal Siswa</div>
+        <div class="shortcut-sub">Akses Siswa</div>
+      </div>
+    </div>
+
+    <!-- Administrasi Guru -->
+    <div class="shortcut-card indigo" data-path="administrasi.html">
+      <div class="shortcut-icon"><i class="fa-solid fa-folder-open"></i></div>
+      <div>
+        <div class="shortcut-title">Administrasi</div>
+        <div class="shortcut-sub">CP, TP, ATP, Rapor</div>
+      </div>
+    </div>
+
+    <!-- Layar Jadwal TV -->
+    <div class="shortcut-card rose" data-path="layar-jadwal.html">
+      <div class="shortcut-icon"><i class="fa-solid fa-tv"></i></div>
+      <div>
+        <div class="shortcut-title">Layar Jadwal</div>
+        <div class="shortcut-sub">Display TV Sekolah</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Server URL -->
+  <div class="settings-box">
+    <div class="settings-header" id="btnToggleSettings">
+      <span><i class="fa-solid fa-gear" style="color: var(--primary);"></i> Pengaturan Alamat Server</span>
+      <i class="fa-solid fa-chevron-down" id="settingsChevron"></i>
+    </div>
+    <div class="settings-body" id="settingsBody">
+      <label class="form-label" for="inputServerUrl">Alamat URL Aplikasi (Localhost / Hosting):</label>
+      <input type="text" id="inputServerUrl" class="input-url" placeholder="http://localhost/Jurnal Guru">
+      <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+        <button type="button" id="btnSetLocalhost" style="flex:1; font-size: 10px; padding: 4px; border: 1px solid var(--border); border-radius: 5px; background: white; cursor: pointer;">
+          Set Localhost
+        </button>
+      </div>
+      <button class="btn-save-url" id="btnSaveUrl">
+        <i class="fa-solid fa-floppy-disk"></i> Simpan Alamat
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>Jurnal Guru Digital v1.0.0</span>
+    <span style="color: #10b981;"><i class="fa-solid fa-shield-check"></i> Siap Digunakan</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jurnal Guru - Side Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --surface: #ffffff;
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navigation Bar */
+    .top-bar {
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      z-index: 10;
+    }
+
+    .bar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      gap: 8px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 13px;
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+      letter-spacing: -0.2px;
+    }
+
+    .actions-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .action-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      transition: all 0.15s ease;
+    }
+
+    .action-btn:hover {
+      background: #f1f5f9;
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .action-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Navigation Quick Tabs */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 12px 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #f1f5f9;
+      border: 1px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn:hover {
+      color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Settings Banner (Collapsible) */
+    .settings-panel {
+      display: none;
+      padding: 8px 12px;
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+    }
+
+    .settings-panel.show {
+      display: block;
+    }
+
+    .settings-input-group {
+      display: flex;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .settings-input {
+      flex: 1;
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      font-size: 11px;
+      outline: none;
+    }
+
+    .settings-input:focus {
+      border-color: var(--primary);
+    }
+
+    .settings-save-btn {
+      padding: 4px 10px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Main Frame Area */
+    .frame-wrapper {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Loading Spinner */
+    .loader-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(2px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      z-index: 5;
+      transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+    .loader-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid #e2e8f0;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loader-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-bar">
+    <div class="bar-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <span class="brand-title">Jurnal Guru</span>
+      </div>
+
+      <div class="actions-group">
+        <button class="action-btn" id="btnReload" title="Muat Ulang Halaman">
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
+        <button class="action-btn" id="btnOpenTab" title="Buka di Tab Penuh Baru">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </button>
+        <button class="action-btn" id="btnToggleSettings" title="Pengaturan Alamat Server">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-path="app.html">
+        <i class="fa-solid fa-chalkboard-user"></i> Dashboard
+      </button>
+      <button class="tab-btn" data-path="app.html#tugas">
+        <i class="fa-solid fa-layer-group"></i> LMS Guru
+      </button>
+      <button class="tab-btn" data-path="kelola-soal.html">
+        <i class="fa-solid fa-file-circle-question"></i> CBT / Soal
+      </button>
+      <button class="tab-btn" data-path="siswa.html">
+        <i class="fa-solid fa-user-graduate"></i> Siswa
+      </button>
+      <button class="tab-btn" data-path="administrasi.html">
+        <i class="fa-solid fa-folder-open"></i> Administrasi
+      </button>
+    </nav>
+
+    <!-- Collapsible Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+      <label style="font-weight: 600; color: #475569;">Alamat Server Aplikasi:</label>
+      <div class="settings-input-group">
+        <input type="text" id="sidepanelServerUrl" class="settings-input" placeholder="http://localhost/Jurnal Guru">
+        <button id="btnSaveSidepanelUrl" class="settings-save-btn">Simpan</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Frame Area -->
+  <main class="frame-wrapper">
+    <div class="loader-overlay" id="frameLoader">
+      <div class="spinner"></div>
+      <div class="loader-text">Memuat Jurnal Guru...</div>
+    </div>
+
+    <iframe id="mainFrame" src="about:blank" allow="fullscreen; clipboard-read; clipboard-write; camera; microphone"></iframe>
+  </main>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>
