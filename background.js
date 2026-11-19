@@ -42,7 +42,7 @@ async function ensureDnrRules() {
             ]
           },
           condition: {
-            urlFilter: "*",
+            requestDomains: ["gurugenz.my.id", "localhost", "127.0.0.1"],
             resourceTypes: ["sub_frame"]
           }
         }

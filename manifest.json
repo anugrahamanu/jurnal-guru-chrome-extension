@@ -34,6 +34,10 @@
     "declarativeNetRequest"
   ],
   "host_permissions": [
+    "*://gurugenz.my.id/*",
+    "*://*.gurugenz.my.id/*",
+    "*://localhost/*",
+    "*://127.0.0.1/*",
     "<all_urls>"
   ],
   "declarative_net_request": {
