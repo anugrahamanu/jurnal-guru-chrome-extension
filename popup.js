@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         clean = "https://" + clean;
       }
     }
+    clean = clean.replace(/\/(app|index|siswa|kelola-soal|administrasi)\.html.*$/i, "");
     return clean;
   }
 

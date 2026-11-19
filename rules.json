@@ -5,12 +5,16 @@
     "action": {
       "type": "modifyHeaders",
       "responseHeaders": [
+        { "header": "X-Frame-Options", "operation": "remove" },
         { "header": "x-frame-options", "operation": "remove" },
-        { "header": "content-security-policy", "operation": "remove" },
-        { "header": "frame-options", "operation": "remove" }
+        { "header": "Frame-Options", "operation": "remove" },
+        { "header": "frame-options", "operation": "remove" },
+        { "header": "Content-Security-Policy", "operation": "remove" },
+        { "header": "content-security-policy", "operation": "remove" }
       ]
     },
     "condition": {
+      "urlFilter": "*",
       "resourceTypes": ["sub_frame"]
     }
   }

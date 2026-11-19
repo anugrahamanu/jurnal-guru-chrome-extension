@@ -6,6 +6,10 @@ const ONLINE_SERVER_URL = "https://gurugenz.my.id";
 document.addEventListener("DOMContentLoaded", async () => {
   const iframe = document.getElementById("mainFrame");
   const loader = document.getElementById("frameLoader");
+  const loaderText = document.getElementById("loaderText");
+  const iframeFallback = document.getElementById("iframeFallback");
+  const btnFallbackOpenTab = document.getElementById("btnFallbackOpenTab");
+  const btnFallbackRetry = document.getElementById("btnFallbackRetry");
   const btnReload = document.getElementById("btnReload");
   const btnOpenTab = document.getElementById("btnOpenTab");
   const btnToggleSettings = document.getElementById("btnToggleSettings");
@@ -18,8 +22,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let currentServerUrl = DEFAULT_SERVER_URL;
   let currentPath = "app.html";
+  let loadTimeoutId = null;
 
-  // Normalisasi URL: pastikan selalu memiliki protokol https:// atau http://
+  // Normalisasi URL: pastikan selalu memiliki protokol https:// atau http:// dan tanpa akhiran file html
   function normalizeUrl(url) {
     let clean = (url || "").trim().replace(/\/+$/, "");
     if (!clean) return clean;
@@ -30,6 +35,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         clean = "https://" + clean;
       }
     }
+    // Jika ada akhiran /app.html atau /index.html di server URL, hapus agar path tidak double
+    clean = clean.replace(/\/(app|index|siswa|kelola-soal|administrasi)\.html.*$/i, "");
     return clean;
   }
 
@@ -53,28 +60,49 @@ document.addEventListener("DOMContentLoaded", async () => {
     return `${base}/${path}`;
   }
 
+  // Sembunyikan fallback
+  function hideFallback() {
+    if (iframeFallback) iframeFallback.style.display = "none";
+  }
+
+  // Tampilkan fallback
+  function showFallback() {
+    if (loader) loader.classList.add("hidden");
+    if (iframeFallback) iframeFallback.style.display = "flex";
+  }
+
   // Muat halaman ke iframe
   function loadPage(path) {
     currentPath = path;
     const target = getTargetUrl(path);
 
+    hideFallback();
     if (loader) {
+      if (loaderText) loaderText.textContent = "Memuat Jurnal Guru...";
       loader.classList.remove("hidden");
     }
 
-    iframe.src = target;
+    if (loadTimeoutId) clearTimeout(loadTimeoutId);
+
+    try {
+      iframe.src = target;
+    } catch (err) {
+      console.warn("Gagal set iframe src:", err);
+      showFallback();
+      return;
+    }
 
     // Timeout pengaman loader
-    setTimeout(() => {
+    loadTimeoutId = setTimeout(() => {
       if (loader) loader.classList.add("hidden");
-    }, 4000);
+    }, 3500);
   }
 
   // Saat iframe selesai termuat
   iframe.addEventListener("load", () => {
-    if (loader) {
-      loader.classList.add("hidden");
-    }
+    if (loader) loader.classList.add("hidden");
+    if (loadTimeoutId) clearTimeout(loadTimeoutId);
+    hideFallback();
   });
 
   // Tombol Pilihan Navigasi Tab
@@ -91,20 +119,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Tombol Muat Ulang (Reload)
   if (btnReload) {
     btnReload.addEventListener("click", () => {
-      if (loader) loader.classList.remove("hidden");
-      try {
-        iframe.contentWindow.location.reload();
-      } catch (e) {
-        iframe.src = getTargetUrl(currentPath);
-      }
+      loadPage(currentPath);
     });
   }
 
   // Tombol Buka di Tab Baru
+  function openCurrentInTab() {
+    const target = getTargetUrl(currentPath);
+    chrome.tabs.create({ url: target });
+  }
+
   if (btnOpenTab) {
-    btnOpenTab.addEventListener("click", () => {
-      const target = getTargetUrl(currentPath);
-      chrome.tabs.create({ url: target });
+    btnOpenTab.addEventListener("click", openCurrentInTab);
+  }
+
+  if (btnFallbackOpenTab) {
+    btnFallbackOpenTab.addEventListener("click", openCurrentInTab);
+  }
+
+  if (btnFallbackRetry) {
+    btnFallbackRetry.addEventListener("click", () => {
+      loadPage(currentPath);
     });
   }
 
